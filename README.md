@@ -3,9 +3,9 @@
 3. run php -S localhost:8000
 4. change DB connect params in .env
 
-#Credentials for login
-manager
-password
+#Credentials for login<br />
+manager<br />
+password<br />
 
 
 #Про проект
