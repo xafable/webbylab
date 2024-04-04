@@ -1,0 +1,21 @@
+{
+    "name": "xafab/webbylab",
+    "description": "WebbyLab Project",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "files": [
+        "app/Utils.php"
+    ],
+    "authors": [
+        {
+            "name": "xafable"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

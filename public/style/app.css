@@ -1,0 +1,60 @@
+ .login-form {
+    margin-top: 100px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+ }
+
+ .login-alert {
+    margin-top: 50px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+ }
+
+ #searchMovieInput{
+    margin-left: auto !important;
+ }
+
+ .w-80 {
+    width: 80% !important;
+ }
+
+ #addMovieButton {
+    width: 175px;
+    margin-bottom: 25px;
+ }
+
+ #uploadFileButton {
+    width: 175px;
+    margin-bottom: 25px;
+    margin-left: 10px;
+ }
+
+ #searchButton {
+
+    margin-left: 10px;
+    margin-right: 10px;
+ }
+
+ .search-input {
+    margin-left: 5px;
+ }
+ .d-none {
+    display: none !important;
+ }
+
+ #addActorButton {
+   height: 27px;
+   width: 71px;
+   margin-left: 10px;
+   font-size: x-small;
+ }
+
+ #searchMovieForm {
+   margin-left: 50%;
+ }
+
+ #logoutButton{
+   margin-left: auto;
+ }
