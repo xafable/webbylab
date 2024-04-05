@@ -1,7 +1,10 @@
-1. run composer dump-autoload
-2. run php migrate.php
-3. run php -S localhost:8000
-4. change DB connect params in .env
+1. git clone https://github.com/xafable/webbylab.git
+2. create Database
+3. change DB connect params in .env
+4. in created folder in console run: composer dump-autoload
+5. run: php migrate.php
+6. run: php -S localhost:8000
+
 
 #Credentials for login<br />
 manager<br />
