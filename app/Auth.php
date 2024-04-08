@@ -11,7 +11,6 @@ class Auth
         session_start();
         $_SESSION['id'] = $user->id;
         $_SESSION['username'] = $user->username;
-        $_SESSION['email'] = $user->email;
 
     }
 
@@ -27,5 +26,10 @@ class Auth
     public static function id()
     {
         return $_SESSION['id'];
+    }
+
+    public static function username()
+    {
+        return $_SESSION['username'];
     }
 }

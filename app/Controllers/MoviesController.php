@@ -29,46 +29,31 @@ class MoviesController
         }
 
        
-
         if($request->has('search')) {
 
             if($request->searchBy == 'movie') {            
-                $movies = Movie::query()
-                ->where('title', 'LIKE', '%' . $request->search . '%')
-                ->orderBy($orderBy, $orderDir);
+                
+                $movies = Movie::getByTitle($request->search, $orderBy, $orderDir);
+
             }
 
             if($request->searchBy == 'actor') {
 
-                $actors = Actor::query()
-                    ->select(['movie_actors.movie_id'])
-                    ->join('movie_actors', 'actors.id', 'movie_actors.actor_id')
-                    ->where('name', 'LIKE', '%' . $request->search . '%')
-                    ->get();
-
-                $movieIds = [];
-                foreach($actors as $actor) {
-                    $movieIds[] = $actor->movie_id;
-                }    
-
-                
-                
-                $inString = implode(',', $movieIds);
-                $movies = Movie::query()
-                    ->where('id', 'IN',  $inString )
-                    ->orderBy($orderBy, $orderDir);
+                $movies = Movie::getByActor($request->search, $orderBy, $orderDir);
                     
-                
-                    
+            }
+
+            if($request->searchBy == 'all') {
+
+                $movies = Movie::getByMovieOrActor($request->search, $orderBy, $orderDir);
             }
 
         }
         else {
             $movies = Movie::query()->orderBy($orderBy, $orderDir);
+            $movies = $movies->get();
         }
-        
-        $movies = $movies->get();
-    
+
 
         if($request->wantsJson) {
 
@@ -124,8 +109,20 @@ class MoviesController
     {
         $actorsNames = $request->actors;
 
-      /*   var_dump($request->actors);
-        die(); */
+
+
+        $movieExists = Movie::query()
+            ->dbClient()
+            ->exists('title', $request->title);
+
+        
+        if($movieExists) {
+            Response::json([
+                'message' => 'Movie already exists'
+            ], 400);
+        }   
+
+
         $actorsIds = [];
         foreach($actorsNames as $actorName) {
             $actorId = Actor::query()
@@ -137,8 +134,6 @@ class MoviesController
                     ->create([
                         'name' => $actorName
                     ]);
-
-
 
                 $actorsIds[] = $actor->id;   
             }   

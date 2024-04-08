@@ -54,35 +54,51 @@ function listenConfirmAddButton() {
             if(el.value.length > 0) actors.push(el.value);
         });
 
-        if(title.length === 0) {
+        if(title.trim().length === 0) {
             showToast('Add title');
             document.querySelector('#addMovieModal [data-movie-title]').focus();
             return;
         }
-        if(actors.length === 0) {
-            showToast('Add at least one actor');
-            document.querySelector('#addMovieModal [data-movie-actor]').focus();
-            return;
 
-        }
-        if(year.length === 0) {
-            showToast('Add year');
+        if(year.trim().length === 0 || year < 1850 || year > 2030) {
+            showToast('Valid date range 1850 - 2030');
             document.querySelector('#addMovieModal [data-movie-year]').focus();
             return;
         }
 
+        if(actors.length === 0) {
+            showToast('Add at least one actor');
+            document.querySelector('#addMovieModal [data-movie-actor]').focus();
+            return;
+        }
+
+        let actorsValid = true;
+        actorsElements.forEach((el) => {
+            if(!containsOnlyValidChars(el.value.trim())) {
+                showToast('Only letters and spaces allowed in actor names');
+                el.focus();
+                actorsValid = false;
+                return;
+            }});
+        if(!actorsValid) {
+            return;
+        }
+
+ 
 
         const createResult = await requestCreateMovie({
-            title: title,
-            year: year,
+            title: title.trim(),
+            year: year.trim(),
             format_id: formatId,
             actors: actors
         });
 
+        console.log('hghghgh',createResult);
 
         if(createResult.error) {
             console.log(createResult.error);
-            modalAddMovie.hide();
+            showToast(createResult.error);
+            //modalAddMovie.hide();
             return;
         }
 
@@ -118,3 +134,8 @@ function clearInputs(){
     </li>`;
 
 }
+
+function containsOnlyValidChars(inputString) {
+    let regex = /^[a-zA-Z\-]+$/;
+    return regex.test(inputString);
+  }

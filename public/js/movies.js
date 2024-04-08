@@ -134,7 +134,7 @@ function listenClearSearchButton() {
         currentMoviesOptions.searchBy = false;
 
         document.querySelector('#moviesSearchInput').value = '';
-        document.querySelector('#moviesSearchBySelect').value = 'movie';
+        document.querySelector('#moviesSearchBySelect').value = 'all';
         document.querySelector('#clearSearchButton').classList.add('d-none');
 
         loadMovies();
@@ -170,7 +170,7 @@ async function showMovieInfo(id){
 
     modalMovieInfo.show();
 
-    console.log(id);
+  
 }
 
 function listenClickDeleteMovie() {

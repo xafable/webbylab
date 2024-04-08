@@ -8,7 +8,8 @@
    
       <form class="d-flex" role="search" id="searchMovieForm">
           <select class="form-select" aria-label="Default select example" id="moviesSearchBySelect">
-              <option value="movie" selected>Movie</option>
+              <option value="all" selected>All</option>
+              <option value="movie">Movie</option>
               <option value="actor">Actor</option>
           </select>
           <input class="form-control me-2 search-input" type="search" placeholder="Search" aria-label="Search" id="moviesSearchInput">
@@ -17,7 +18,19 @@
           <button type="button" class="btn btn-outline-danger d-none" id="clearSearchButton">X</button>
       </form>
 
-      <a href="/logout" class="btn btn-outline-danger" id="logoutButton">Logout</a>
+
     </div>
+
+
+    <div class="btn-group">
+    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <?php use App\Auth; echo Auth::username(); ?>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="/logout" id="logoutButton">Logout</a></li>
+    </ul>
+    
+  </div>
+
   </div>
 </nav>

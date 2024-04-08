@@ -15,6 +15,10 @@ class UploadController
     {}
     public function handle()
     {
+        $importedCount = 0;
+        $totalCount = 0;
+        $existsCount = 0;
+
         $file_name = $_FILES['file']['name'];
         $file_size = $_FILES['file']['size'];
         $file_tmp = $_FILES['file']['tmp_name'];
@@ -39,6 +43,7 @@ class UploadController
         $parsed_movies = [];
 
         foreach ($movies as $movie) {
+            $totalCount++;
             $title = '';
             $release_year = '';
             $format = '';
@@ -77,6 +82,7 @@ class UploadController
                 ->exists('title', $movie['Title']);
 
             if($movieExists) {
+                $existsCount++;
                 continue;
             }
 
@@ -124,6 +130,8 @@ class UploadController
                 'year' => $movie['Release Year'],
                 'created_by' => Auth::id()
             ]);
+
+            $importedCount++;
     
     
             foreach($actorsIds as $actorId) {
@@ -136,7 +144,11 @@ class UploadController
             }
         }
 
-        Response::json(['message' => 'File uploaded successfully.'],200);
+        if($totalCount === $existsCount) {
+            Response::json(['message' => 'No movies imported. All movies already exist.'],200);
+        }
+       
+        Response::json(['message' => "Imported $importedCount of $totalCount movies."],200);
      
     }
 }

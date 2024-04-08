@@ -60,10 +60,7 @@ function listenConfirmUploadButton() {
         loadMovies();
         _clearInputs();
 
-        showToast('Movies uploaded');
-
-
-       
+        showToast(uploadResult.success.message);    
 
 
 
@@ -89,7 +86,7 @@ async function requestUpload(file) {
 }
 function _clearInputs(){
 
-    document.querySelector('#addMovieModal [data-movies-file]').value = '';
+    document.querySelector('#uploadMovieModal [data-movies-file]').value = '';
     file = false;
 
 }

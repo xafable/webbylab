@@ -37,4 +37,17 @@ class Utils
             unset($_SESSION['flash_message']);
         }
     }
+
+    public function setInputData($input, $data) 
+    {
+        $_SESSION['inputs'][$input] = $data;
+    }
+
+    public function getInputData($input)
+    {
+        if (isset($_SESSION['inputs'][$input])) {
+            return $_SESSION['inputs'][$input];
+        }
+        return '';    
+    }
 }

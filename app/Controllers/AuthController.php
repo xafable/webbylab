@@ -50,14 +50,51 @@ class AuthController
 
     }
 
+    public function showRegister()
+    {
+        Response::View('register');
+    }
+
     public function register(Request $request)
     {
+
+        $username = $request->username;
+        $password = $request->password;
+
+        if(empty($username) || empty($password)) {
+
+            Utils::setFlashMessage('Username and password are required');
+
+            Response::redirect('/register');
+        }
+
+        $userExists = User::query()
+        ->dbClient()
+        ->exists('username', $username);
+
+
+        if($userExists) {
+            Utils::setFlashMessage('User already exists');
+
+            Response::redirect('/register');
+        }
+
+
+        $user = User::query()
+        ->create([
+            'username' => $username,
+            'password' => md5($password)
+        ]);
+
+
+        Auth::session($user);
+
+        Response::redirect('/movies');
         
     }
 
     
     public function logout() {
-        // End session and redirect to login page
         session_start();
         session_destroy();
        

@@ -43,6 +43,14 @@ class Model
        
     }
 
+
+    public function orWhere($column, $operator, $value)
+    {
+        self::$dbClient->orWhere($column, $operator, $value);
+
+        return new static();
+    }
+
     
     public function select(array $columns)
     {
@@ -103,7 +111,7 @@ class Model
 
     public function __get($name)
     {
-        return $this->attributes[$name];
+        return htmlspecialchars($this->attributes[$name]);
     }
 
     public function __set($name, $value)
@@ -113,7 +121,14 @@ class Model
 
     public function toArray()
     {
-        return $this->attributes;
+        return array_map(function($value) {
+            if(!is_array($value)) {
+                return htmlspecialchars($value);
+            }
+            else {
+                return $value;
+            }
+        }, $this->attributes);
     }
 
   

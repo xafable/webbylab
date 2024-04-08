@@ -21,11 +21,11 @@ use App\Utils;
 <div class="login-alert" role="alert">
   <?php Utils::displayFlashMessage(); ?>
 </div>
-<form class="row g-3 needs-validation login-form " novalidate action="/login" method="POST">
+<form class="row g-3 needs-validation register-form " novalidate action="/register" method="POST">
        
         <div class="col-md-12">
             <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend">Username</span>
+                <span class="input-group-text" >Username</span>
                 <input name="username" type="text" class="form-control" id="username"
                     aria-describedby="inputGroupPrepend" required>
                 <div class="invalid-feedback">
@@ -33,9 +33,10 @@ use App\Utils;
                 </div>
             </div>
         </div>
+
         <div class="col-md-12">
             <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend">Password</span>
+                <span class="input-group-text">Password</span>
                 <input name="password" type="text" class="form-control" id="password"
                     aria-describedby="inputGroupPrepend" required>
                 <div class="invalid-feedback">
@@ -43,20 +44,29 @@ use App\Utils;
                 </div>
             </div>
         </div>
+
+        <div class="col-md-12">
+            <div class="input-group has-validation">
+                <span class="input-group-text">Repeat </span>
+                <input name="password" type="text" class="form-control" id="repeatPassword"
+                    aria-describedby="inputGroupPrepend" required>
+                <div class="invalid-feedback">
+                    Passwords don't match
+                </div>
+            </div>
+        </div>
        
         <div class="col-12">
-            <button class="btn btn-outline-success" type="submit" style="width: 100%;" id="loginButton" disabled>Login</button>
+            <button disabled id="registerButton" class="btn btn-outline-success" type="submit" style="width: 100%;">Register</button>
         </div>
 
-        <p><a class="link-opacity-100" href="/register">Doesn't have an account? Register</a></p>
+        <p><a class="link-opacity-100" href="/login">Already have an account? Login</a></p>
 
     </form>
-
-
 </div>
    
 
-     <script src="../../public/js/login.js"></script>
+     <script src="../../public/js/register.js"></script>
 
     <?php
 	include(__DIR__."/components/footer-data.php");

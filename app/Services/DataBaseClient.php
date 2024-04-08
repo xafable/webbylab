@@ -12,6 +12,7 @@ class DataBaseClient
     private $table = '';
 
     private $conditions = [];
+    private $orConditions = [];
     private $columns = [];
     private $joins = [];
     private $orderBy = '';
@@ -54,6 +55,13 @@ class DataBaseClient
        
         return $this;
        
+    }
+
+
+    public function orWhere($column, $operator, $value)
+    {
+
+        $this->orConditions[] = [$column, $operator, $value];
     }
 
     public function join($table, $column1, $column2)
@@ -189,6 +197,21 @@ class DataBaseClient
          }
         }
 
+
+        if(count($this->orConditions) > 0) {
+            foreach($this->orConditions as $key => $item) {
+                $valName = '_valr'.$key;
+                $operator = $item[1];
+                if($operator == 'IN') {
+                    $condition .= " OR FIND_IN_SET({$item[0]}, :__{$valName}) ";
+                }
+                else {
+                    $condition .= " OR {$item[0]} {$item[1]} :__{$valName} ";
+                }
+                
+             }
+        }
+
         $joins = '';
         if(count($this->joins) > 0) {
             foreach($this->joins as $key => $item) {
@@ -198,7 +221,7 @@ class DataBaseClient
 
         $order = '';
         if($this->orderBy) {
-            $order = " ORDER BY $this->orderBy $this->orderDir ";
+            $order = " ORDER BY $this->orderBy  COLLATE  utf8mb4_unicode_ci $this->orderDir";
         }
 
 
@@ -220,6 +243,13 @@ class DataBaseClient
             foreach($this->conditions as $key => $item) {
                 $valName = '_val'.$key;
     
+                $stmt->bindParam(":__".$valName, $item[2], PDO::PARAM_STR);
+            }
+        }
+
+        if(count($this->orConditions) > 0){
+            foreach($this->orConditions as $key => $item) {
+                $valName = '_valr'.$key;
                 $stmt->bindParam(":__".$valName, $item[2], PDO::PARAM_STR);
             }
         }

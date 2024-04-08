@@ -32,6 +32,9 @@ class Kernel
         $router->add('/logout','AuthController','logout','POST');
         $router->add('/login','AuthController','index','GET');
 
+        $router->add('/register','AuthController','register','POST');
+        $router->add('/register','AuthController','showRegister','GET');
+
         
         $router->add('/movie','MoviesController','show','GET',true);
         $router->add('/movies','MoviesController','index','GET',true);
